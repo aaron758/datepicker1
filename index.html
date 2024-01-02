@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="/manifest.json">
+    <title>Days Calculator</title>
+
+    <!-- Voeg dit toe aan je index.html-bestand -->
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then(registration => {
+                console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(error => {
+                console.error('Service Worker registration failed:', error);
+            });
+    }
+</script>
+
+</head>
+<body>
+
+    <label for="datePicker1">Datum 1:</label>
+    <input type="date" id="datePicker1">
+
+    <label for="datePicker2">Datum 2:</label>
+    <input type="date" id="datePicker2">
+
+    <button onclick="calculateElapsedDays()">Bereken Verstreken Dagen</button>
+
+    <p id="result"></p>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then(registration => {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                })
+                .catch(error => {
+                    console.error('Service Worker registration failed:', error);
+                });
+        }
+
+        function calculateElapsedDays() {
+            var datePicker1 = document.getElementById('datePicker1').valueAsDate;
+            var datePicker2 = document.getElementById('datePicker2').valueAsDate;
+
+            if (!datePicker1 || !datePicker2) {
+                alert('Selecteer beide datums.');
+                return;
+            }
+
+            var difference = Math.abs(datePicker2 - datePicker1);
+            var daysElapsed = Math.ceil(difference / (1000 * 60 * 60 * 24));
+
+            document.getElementById('result').innerText = 'Verstreken dagen: ' + daysElapsed;
+        }
+    </script>
+
+</body>
+</html>
